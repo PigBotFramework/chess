@@ -1,9 +1,9 @@
-from pbf import PBF
-from utils.RegCmd import RegCmd
+from pbf.controller.PBF import PBF
+from pbf.utils.RegCmd import RegCmd
 import requests, time, random, sys
 from urllib.request import urlopen, Request
 from io import BytesIO
-from utils.pillow.build_image import BuildImage, Text2Image
+from pbf.utils.pillow.build_image import BuildImage, Text2Image
 
 _name = "下棋"
 _version = "1.0.1"
@@ -14,36 +14,30 @@ _cost = 0.00
 class chess(PBF):
     def __enter__(self):
         return [
-            RegCmd(
-                name = "连子棋下 ",
-                usage = "见提示",
-                permission = "anyone",
-                function = "chess@go",
-                description = "在指定位置下棋",
-                mode = "连  子  棋",
-                hidden = 0,
-                type = "command"
-            ),
-            RegCmd(
-                name = "连子棋组队",
-                usage = "连子棋组队 <棋盘边长> <连子个数>",
-                permission = "anyone",
-                function = "chess@make",
-                description = "连子棋组队",
-                mode = "连  子  棋",
-                hidden = 0,
-                type = "command"
-            ),
-            RegCmd(
-                name = "加入连子棋 ",
-                usage = "加入连子棋 <密钥>",
-                permission = "anyone",
-                function = "chess@join",
-                description = "加入连子棋房间",
-                mode = "连  子  棋",
-                hidden = 0,
-                type = "command"
-            )
+    @RegCmd(
+        name = "连子棋下 ",
+        usage = "见提示",
+        permission = "anyone",
+        function = "chess@go",
+        description = "在指定位置下棋",
+        mode = "连  子  棋"
+    )
+    @RegCmd(
+        name = "连子棋组队",
+        usage = "连子棋组队 <棋盘边长> <连子个数>",
+        permission = "anyone",
+        function = "chess@make",
+        description = "连子棋组队",
+        mode = "连  子  棋"
+    )
+    @RegCmd(
+        name = "加入连子棋 ",
+        usage = "加入连子棋 <密钥>",
+        permission = "anyone",
+        function = "chess@join",
+        description = "加入连子棋房间",
+        mode = "连  子  棋"
+    )
         ]
     
     def jing_pair(self):
