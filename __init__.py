@@ -12,34 +12,6 @@ _author = "xzyStudio"
 _cost = 0.00
 
 class chess(PBF):
-    def __enter__(self):
-        return [
-    @RegCmd(
-        name = "连子棋下 ",
-        usage = "见提示",
-        permission = "anyone",
-        function = "chess@go",
-        description = "在指定位置下棋",
-        mode = "连  子  棋"
-    )
-    @RegCmd(
-        name = "连子棋组队",
-        usage = "连子棋组队 <棋盘边长> <连子个数>",
-        permission = "anyone",
-        function = "chess@make",
-        description = "连子棋组队",
-        mode = "连  子  棋"
-    )
-    @RegCmd(
-        name = "加入连子棋 ",
-        usage = "加入连子棋 <密钥>",
-        permission = "anyone",
-        function = "chess@join",
-        description = "加入连子棋房间",
-        mode = "连  子  棋"
-    )
-        ]
-    
     def jing_pair(self):
         uid = self.data.se.get('user_id')
         if self.data.args[-1] != self.data.args[0]:
@@ -218,6 +190,13 @@ class chess(PBF):
                     frame.draw_text((i*100-100, l*100-100, i*100, l*100), '({0},{1})'.format(i-1, l-1))
         self.client.msg().raw('[CQ:image,file=https://pbfresources.xzynb.top/createimg/{0}]'.format(frame.save_png()))
     
+    @RegCmd(
+        name = "连子棋组队",
+        usage = "连子棋组队 <棋盘边长> <连子个数>",
+        permission = "anyone",
+        description = "连子棋组队",
+        mode = "连  子  棋"
+    )
     def make(self):
         if len(self.data.args) < 3:
             return self.client.msg().raw('参数不全，用法：连子棋组队 棋盘边长 连子个数')
@@ -267,6 +246,13 @@ class chess(PBF):
         self.client.msg().raw('已创建对战，您的配对密钥为：{0}'.format(pswd))
         self.client.msg('您的作弊密钥为：{0}'.format(zuobi)).custom(uid)
     
+    @RegCmd(
+        name = "加入连子棋 ",
+        usage = "加入连子棋 <密钥>",
+        permission = "anyone",
+        description = "加入连子棋房间",
+        mode = "连  子  棋"
+    )
     def join(self):
         # 有密钥
         uid = self.data.se.get('user_id')
@@ -297,6 +283,13 @@ class chess(PBF):
         self.client.msg().raw('[CQ:image,file=https://pbfresources.xzynb.top/createimg/{0}]'.format(checkerboard[num]['filename']))
         self.client.msg().raw('先手：[CQ:at,qq={0}]\n请发送“连子棋下 X坐标 Y坐标”来下棋'.format(ob.get('turn')))
     
+    @RegCmd(
+        name = "连子棋下 ",
+        usage = "见提示",
+        permission = "anyone",
+        description = "在指定位置下棋",
+        mode = "连  子  棋"
+    )
     def go(self):
         uid = self.data.se.get('user_id')
         l = 0
