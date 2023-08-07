@@ -225,6 +225,9 @@ class chess(PBF):
 
         # 生成图片
         bianchang = int(self.data.args[1])
+        username = str(self.data.se.get('sender').get('nickname'))
+        if len(username) > 15:
+            username = username[0:15]
         frame = self.load_image('chess/0.png').resize((bianchang * 100, bianchang * 100 + 110))
         for i in range(bianchang + 1):
             for l in range(bianchang + 1):
@@ -235,7 +238,7 @@ class chess(PBF):
                     (int(bianchang / 2), bianchang * 100))
         frame.paste(self.GetImage(uid).resize((90, 90)).circle(), (10, bianchang * 100 + 10))
         frame.draw_text((115, bianchang * 100 + 5, 300, bianchang * 100 + 100),
-                        str(self.data.se.get('sender').get('nickname')) + '（绿方）')
+                        username + '（绿方）')
         filename = frame.save_png()
 
         checkerboard.append({
